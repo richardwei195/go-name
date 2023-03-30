@@ -94,11 +94,18 @@ type LunarDate struct {
 	YearGanZi *LunarYearGanZi `json:"gan_zi"`
 }
 
-// 农历通谷记年(干支和生肖属相)
+// LunarYearGanZi 农历通谷记年(干支和生肖属相)
 type LunarYearGanZi struct {
 	Gan    string `json:"gan"`
 	Zhi    string `json:"zhi"`
 	Animal string `json:"animal"`
+}
+
+type DateReturn struct {
+	Year  int
+	Month int
+	Day   int
+	Hour  int
 }
 
 var (
@@ -1466,12 +1473,27 @@ func zqSinceWinterSolstice(year int) ([15]float64, error) {
 	return jdpjq, err
 }
 
-func TestCalendar() int {
+// GetBirthTime 获取阳历出生时间
+func (d DateReturn) GetBirthTime() *Date {
+	date := YmdhNewDate(d.Year, d.Month, d.Day, d.Hour, time.Local)
+
+	return date
+}
+
+// GetSolarDate 获取出生日太阳时
+func GetSolarDate(d *Date) *SolarDate {
+	sc := Calendar{
+		Getjq: false, // 是否取节气
+	}
+	return sc.DateToSolarDate(d)
+}
+
+func TestCalendar(year, month, day, hour int) int {
 	sc := Calendar{
 		Getjq: false, // 是否取节气
 	}
 
-	d := YmdhNewDate(2012, 3, 13, 16, time.Local)
+	d := YmdhNewDate(year, month, day, hour, time.Local)
 	//    d := NewDate()
 	ssd := sc.DateToSolarDate(d)
 	//ld,err:= sc.Solar2Lunar(sc.DateToSolarDate(d))
