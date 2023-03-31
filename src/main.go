@@ -40,7 +40,7 @@ func main() {
 
 	gin.SetMode(gin.DebugMode)
 	r := gin.New()
-	r.GET("/dateResult", routes.GetDateResult)
+	r.GET("/nameAnalyze", routes.GetNameAnalyse)
 
 	log.Printf(color.CyanString("Current Rate Limit: %v requests/s", *rps))
 

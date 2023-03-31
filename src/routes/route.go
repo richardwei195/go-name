@@ -8,7 +8,11 @@ import (
 	"strconv"
 )
 
-func GetDateResult(c *gin.Context) {
+// GetNameAnalyse 获取用户名字分析
+func GetNameAnalyse(c *gin.Context) {
+	surname := c.Query("surname")
+
+	log.Printf("get surname: %s", surname)
 	year, err := strconv.Atoi(c.Query("year"))
 	if err != nil {
 		log.Printf("year type is not valid")
