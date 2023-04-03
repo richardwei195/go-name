@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/gin-gonic/gin"
+	"go-name/src/config"
 	"go-name/src/routes"
 	"go.uber.org/ratelimit"
+	"gorm.io/gorm"
 	"log"
 	"runtime"
 	"time"
 )
 
 var (
+	db    *gorm.DB = config.ConnectDB()
 	limit ratelimit.Limiter
 	rps   = flag.Int("rps", 100, "request per second")
 )
@@ -36,11 +39,14 @@ func ConfigRuntime() {
 func main() {
 	ConfigRuntime()
 
+	defer config.DisconnectDB(db)
+
 	limit = ratelimit.New(*rps)
 
 	gin.SetMode(gin.DebugMode)
 	r := gin.New()
-	r.GET("/nameAnalyze", routes.GetNameAnalyse)
+
+	routes.Routes(r)
 
 	log.Printf(color.CyanString("Current Rate Limit: %v requests/s", *rps))
 
