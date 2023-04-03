@@ -9,6 +9,10 @@ import (
 	"os"
 )
 
+var (
+	db *gorm.DB = ConnectDB()
+)
+
 // ConnectDB 创建DB连接
 func ConnectDB() *gorm.DB {
 	errorEnv := godotenv.Load()

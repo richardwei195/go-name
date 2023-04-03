@@ -4,10 +4,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	db *gorm.DB = ConnectDB()
-)
-
 type SexType string
 
 type FiveElementType string

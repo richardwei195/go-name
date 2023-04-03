@@ -13,6 +13,7 @@ var MsgFlags = map[int]string{
 	ERROR_DELETE_TAG_FAIL: "删除标签失败",
 	ERROR_EXPORT_TAG_FAIL: "导出标签失败",
 	ERROR_IMPORT_TAG_FAIL: "导入标签失败",
+	ERROR_QUERY_DB_FAIL:   "查询数据库失败",
 }
 
 // GetMsg get error information based on Code

@@ -62,25 +62,42 @@ func GetNames(c *gin.Context) {
 	names, error := models.GetNames(body.PageNum, 10, query)
 
 	if error != nil {
-		appG.Response(http.StatusBadRequest, e.ERROR_GET_NAMES_FAIL, nil)
+		appG.Response(http.StatusBadRequest, e.ERROR_QUERY_DB_FAIL, error.Error())
 		return
 	}
+
 	data := make(map[string]interface{})
 
 	if len(names) == 0 {
+
 		appG.Response(http.StatusOK, e.SUCCESS, data)
 		return
+	}
+
+	var wordQueryArray []string
+	for _, val := range names {
+		wordQueryArray = append(wordQueryArray, val.Name)
+	}
+
+	wordsResult, error := models.GetWords(wordQueryArray)
+
+	// 不报错，记录错误日志
+	if error != nil {
+		logging.Info(error.Error())
+		//appG.Response(http.StatusBadRequest, e.ERROR_QUERY_DB_FAIL, error.Error())
+		//return
 	}
 
 	var nameResponse []NameResponse
 
 	for _, value := range names {
+		//组装八字、姓名
 		name := NameResponse{value, solarDate}
 		nameResponse = append(nameResponse, name)
 	}
 
-	data["list"] = nameResponse
-
+	data["nameList"] = nameResponse
+	data["wordsList"] = wordsResult
 	appG.Response(http.StatusOK, e.SUCCESS, data)
 	return
 }
