@@ -1,5 +1,13 @@
 package models
 
+import (
+	"gorm.io/gorm"
+)
+
+var (
+	db *gorm.DB = ConnectDB()
+)
+
 type SexType string
 
 type FiveElementType string
@@ -47,4 +55,15 @@ type TName struct {
 	MachineScore float64
 	ManualScore  float64
 	FiveElements FiveElementType
+}
+
+func GetNames(pageNum, pageSize int, maps interface{}) ([]*TName, error) {
+	var names []*TName
+	ret := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&names)
+
+	if ret.Error != nil && ret.Error != gorm.ErrRecordNotFound {
+		return nil, ret.Error
+	}
+
+	return names, ret.Error
 }
