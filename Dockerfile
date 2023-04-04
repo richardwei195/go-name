@@ -1,20 +1,16 @@
-# syntax=docker/dockerfile:1
+FROM golang:alpine AS builder
 
-FROM golang:1.16-alpine
+WORKDIR /build
 
-ENV GO111MODULE=on
+ADD go.mod .
+ADD .env .
+COPY . .
+RUN go build -o main src/main.go
 
 
-WORKDIR /app
+FROM alpine
 
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+WORKDIR /build
+COPY --from=builder /build/main /build/main
 
-COPY *.go ./
-
-RUN go build -o /build
-
-EXPOSE 8080
-
-CMD [ "/build" ]
+CMD ["./main"]
