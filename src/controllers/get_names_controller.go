@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	validation2 "github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"go-name/src/calendar"
@@ -42,6 +43,7 @@ func GetNames(c *gin.Context) {
 	valid.Range(body.Month, 1, 12, "month")
 	valid.Range(body.Day, 1, 31, "day")
 	valid.Min(body.PageNum, 0, "pageNumber")
+	valid.Range(body.PageSize, 1, 30, "pageSize")
 
 	if valid.HasErrors() {
 		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, valid.Errors)
@@ -59,7 +61,7 @@ func GetNames(c *gin.Context) {
 	query := make(map[string]interface{})
 
 	//query["five_elements"] = solarDate.GanZhi.PositiveGod
-	names, error := models.GetNames(body.PageNum, 10, query)
+	names, error := models.GetNames(body.PageNum, body.PageSize, query)
 
 	if error != nil {
 		appG.Response(http.StatusBadRequest, e.ERROR_QUERY_DB_FAIL, error.Error())
@@ -75,10 +77,14 @@ func GetNames(c *gin.Context) {
 	}
 
 	var wordQueryArray []string
-	for _, val := range names {
-		wordQueryArray = append(wordQueryArray, val.Name)
+	for _, nameVal := range names {
+		name := nameVal.Name
+		for _, word := range name {
+			wordQueryArray = append(wordQueryArray, string(word))
+		}
 	}
 
+	fmt.Printf("%#v\n", wordQueryArray)
 	wordsResult, error := models.GetWords(wordQueryArray)
 
 	// 不报错，记录错误日志

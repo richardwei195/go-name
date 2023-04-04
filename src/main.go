@@ -52,5 +52,5 @@ func main() {
 
 	log.Printf(color.CyanString("Current Rate Limit: %v requests/s", *rps))
 
-	r.Run()
+	r.Run("127.0.0.1:3000")
 }
