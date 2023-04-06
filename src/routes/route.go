@@ -8,4 +8,5 @@ import (
 func Routes(r *gin.Engine) {
 	r.Use(gin.Logger())
 	r.POST("/getNames", controllers.GetNames)
+	r.GET("/prePay", controllers.GetPrePay)
 }

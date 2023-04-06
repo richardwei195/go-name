@@ -32,7 +32,7 @@ func GetNames(c *gin.Context) {
 	appG := app.Gin{C: c}
 	var body NameRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
-		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, err.Error())
+		appG.Response(http.StatusBadRequest, e.InvalidParams, err.Error())
 		return
 	}
 
@@ -46,7 +46,7 @@ func GetNames(c *gin.Context) {
 	valid.Range(body.PageSize, 1, 30, "pageSize")
 
 	if valid.HasErrors() {
-		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, valid.Errors)
+		appG.Response(http.StatusBadRequest, e.InvalidParams, valid.Errors)
 		return
 	}
 	birthTime := calendar.DateReturn{
@@ -61,10 +61,10 @@ func GetNames(c *gin.Context) {
 	query := make(map[string]interface{})
 
 	//query["five_elements"] = solarDate.GanZhi.PositiveGod
-	names, error := models.GetNames(body.PageNum, body.PageSize, query)
+	names, err := models.GetNames(body.PageNum, body.PageSize, query)
 
-	if error != nil {
-		appG.Response(http.StatusBadRequest, e.ERROR_QUERY_DB_FAIL, error.Error())
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.ERROR_QUERY_DB_FAIL, err.Error())
 		return
 	}
 
@@ -85,11 +85,11 @@ func GetNames(c *gin.Context) {
 	}
 
 	fmt.Printf("%#v\n", wordQueryArray)
-	wordsResult, error := models.GetWords(wordQueryArray)
+	wordsResult, err := models.GetWords(wordQueryArray)
 
 	// 不报错，记录错误日志
-	if error != nil {
-		logging.Info(error.Error())
+	if err != nil {
+		logging.Info(err.Error())
 		//appG.Response(http.StatusBadRequest, e.ERROR_QUERY_DB_FAIL, error.Error())
 		//return
 	}
