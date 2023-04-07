@@ -13,13 +13,15 @@ import (
 )
 
 type NameRequest struct {
-	Year     int `json:"year"`
-	Month    int `json:"month"`
-	Day      int `json:"day"`
-	Hour     int `json:"hour"`
-	SurName  int `json:"surName"`
-	PageNum  int `json:"pageNum"`
-	PageSize int `json:"pageSize"`
+	Year     int    `json:"year"`
+	Month    int    `json:"month"`
+	Day      int    `json:"day"`
+	Hour     int    `json:"hour"`
+	SurName  string `json:"surName"` // 姓
+	PageNum  int    `json:"pageNum"`
+	PageSize int    `json:"pageSize"`
+	Sex      string `json:"sex"`
+	DateType string `json:"dateType"` // 日历类型 solar 阳历 lunar 农历
 }
 
 type NameResponse struct {
@@ -44,6 +46,8 @@ func GetNames(c *gin.Context) {
 	valid.Range(body.Day, 1, 31, "day")
 	valid.Min(body.PageNum, 0, "pageNumber")
 	valid.Range(body.PageSize, 1, 30, "pageSize")
+	valid.Required(body.Sex, "sex")
+	valid.Required(body.DateType, "dateType")
 
 	if valid.HasErrors() {
 		appG.Response(http.StatusBadRequest, e.InvalidParams, valid.Errors)
@@ -78,8 +82,9 @@ func GetNames(c *gin.Context) {
 
 	var wordQueryArray []string
 	for _, nameVal := range names {
-		name := nameVal.Name
-		for _, word := range name {
+		nameVal.Name = body.SurName + nameVal.Name
+
+		for _, word := range nameVal.Name {
 			wordQueryArray = append(wordQueryArray, string(word))
 		}
 	}
