@@ -45,12 +45,12 @@ const (
 
 type TName struct {
 	//gorm.Model
-	ID           uint `gorm:"primary"`
-	Name         string
-	Sex          SexType
-	MachineScore float64
-	ManualScore  float64
-	FiveElements FiveElementType
+	ID           uint            `gorm:"primary"`
+	Name         string          `json:"name"`
+	Sex          SexType         `json:"sex"`
+	MachineScore float64         `json:"machineScore"`
+	ManualScore  float64         `json:"manualScore"`
+	FiveElements FiveElementType `json:"fiveElements"`
 }
 
 func GetNames(pageNum, pageSize int, maps interface{}) ([]*TName, error) {
