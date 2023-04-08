@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	appid                      string = "wxd678efh567hg6787"                       // 小程序appid
+	appid                      string = "wx7426614630ba44da"                       // 小程序appid
 	mchID                      string = "190000****"                               // 商户号
 	mchCertificateSerialNumber string = "3775B6A45ACD588826D15E583A95F5DD********" // 商户证书序列号
 	mchAPIv3Key                string = "2ab9****************************"         // 商户APIv3密钥

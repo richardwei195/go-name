@@ -6,15 +6,15 @@ import (
 
 // TWord 单词解析
 type TWord struct {
-	id           uint `gorm:"primary"`
-	Word         string
-	Pinyin       string
-	Bushou       string
-	Stokes       int32
-	FiveElements FiveElementType
-	Weights      int32
-	IsUnCommon   bool
-	Meaning      string
+	id           uint            `gorm:"primary" json:"id"`
+	Word         string          `json:"word"`
+	Pinyin       string          `json:"pinyin"`
+	Bushou       string          `json:"bushou"`
+	Stokes       int32           `json:"stokes"`
+	FiveElements FiveElementType `json:"fiveElements"`
+	Weights      int32           `json:"weights"`
+	IsUnCommon   bool            `json:"isUnCommon"`
+	Meaning      string          `json:"meaning"`
 }
 
 // GetWords 获取单个字解释

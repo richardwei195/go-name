@@ -55,7 +55,7 @@ type TName struct {
 
 func GetNames(pageNum, pageSize int, maps interface{}) ([]*TName, error) {
 	var names []*TName
-	ret := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&names)
+	ret := db.Where(maps).Offset(pageNum).Limit(pageSize).Order("RAND()").Find(&names)
 
 	if ret.Error != nil && ret.Error != gorm.ErrRecordNotFound {
 		return nil, ret.Error

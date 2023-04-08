@@ -48,6 +48,7 @@ func GetNames(c *gin.Context) {
 	valid.Range(body.PageSize, 1, 30, "pageSize")
 	valid.Required(body.Sex, "sex")
 	valid.Required(body.DateType, "dateType")
+	valid.Required(body.SurName, "surName")
 
 	if valid.HasErrors() {
 		appG.Response(http.StatusBadRequest, e.InvalidParams, valid.Errors)
@@ -62,6 +63,7 @@ func GetNames(c *gin.Context) {
 
 	solarDate := calendar.GetSolarDate(birthTime)
 
+	fmt.Print("solarDate: ", solarDate)
 	query := make(map[string]interface{})
 
 	//query["five_elements"] = solarDate.GanZhi.PositiveGod
@@ -84,6 +86,7 @@ func GetNames(c *gin.Context) {
 	for _, nameVal := range names {
 		nameVal.Name = body.SurName + nameVal.Name
 
+		fmt.Printf("nameVal.Name: %s\n", nameVal.Name)
 		for _, word := range nameVal.Name {
 			wordQueryArray = append(wordQueryArray, string(word))
 		}
