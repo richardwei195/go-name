@@ -26,7 +26,6 @@ type NameRequest struct {
 
 type NameResponse struct {
 	*models.TName
-	*calendar.SolarDate
 }
 
 // GetNames 获取用户名字分析
@@ -61,9 +60,10 @@ func GetNames(c *gin.Context) {
 		Hour:  body.Hour,
 	}.GetBirthTime()
 
-	solarDate := calendar.GetSolarDate(birthTime)
+	solarDate, lunarDate := calendar.GetSolarDate(birthTime)
 
 	fmt.Print("solarDate: ", solarDate)
+	fmt.Print("lunarDate: ", lunarDate)
 	query := make(map[string]interface{})
 
 	//query["five_elements"] = solarDate.GanZhi.PositiveGod
@@ -106,11 +106,13 @@ func GetNames(c *gin.Context) {
 
 	for _, value := range names {
 		//组装八字、姓名
-		name := NameResponse{value, solarDate}
+		name := NameResponse{value}
 		nameResponse = append(nameResponse, name)
 	}
 
 	data["nameList"] = nameResponse
+	data["lunarDate"] = lunarDate
+	data["solarDate"] = solarDate
 	data["wordsList"] = wordsResult
 	appG.Response(http.StatusOK, e.SUCCESS, data)
 	return

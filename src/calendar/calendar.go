@@ -1481,11 +1481,18 @@ func (d DateReturn) GetBirthTime() *Date {
 }
 
 // GetSolarDate 获取出生日太阳时
-func GetSolarDate(d *Date) *SolarDate {
+func GetSolarDate(d *Date) (*SolarDate, *LunarDate) {
 	sc := Calendar{
-		Getjq: false, // 是否取节气
+		Getjq: true, // 是否取节气
 	}
-	return sc.DateToSolarDate(d)
+
+	ssd := sc.DateToSolarDate(d)
+
+	ld, err := sc.Solar2Lunar(ssd)
+	if err != nil {
+		fmt.Println("err")
+	}
+	return ssd, ld
 }
 
 func TestCalendar(year, month, day, hour int) int {
