@@ -40,7 +40,7 @@ type CalendarData struct {
 type SolarDate struct {
 	*Date  `json:"date"`
 	Jq     *SolarJQ           `json:"jq"`
-	GanZhi *SolarTianGanDiZhi `json:"gan_zhi"`
+	GanZhi *SolarTianGanDiZhi `json:"ganZhi"`
 }
 
 // 节气及时间
@@ -51,47 +51,47 @@ type SolarJQ struct {
 
 // 公历天干地支
 type SolarTianGanDiZhi struct {
-	Ytg    int    `json:"ytg"`     // 年天干
-	YtgStr string `json:"ytg_str"` // 年天干名称
-	YtgWX  string `json:"ytgwx"`
-	Ydz    int    `json:"ydz"`     // 年地支
-	YdzStr string `json:"ydz_str"` // 年地支名称
-	YdzWX  string `json:"yszwx"`
-	Mtg    int    `json:"mtg"`     // 月天干
-	MtgStr string `json:"mtg_str"` // 月天干名称
-	MtgWX  string `json:"mtgwx"`
-	Mdz    int    `json:"mdz"`     // 月地支
-	MdzStr string `json:"mdz_str"` // 月地支名称
-	MdzWX  string `json:"mdzwx"`
-	Dtg    int    `json:"dtg"`     // 日天干
-	DtgStr string `json:"dtg_str"` // 日天干名称
-	DtgWX  string `json:"dtgwx"`
-	Ddz    int    `json:"ddz"`     // 日地支
-	DdzStr string `json:"ddz_str"` // 日地支名称
-	DdzWX  string `json:"ddzwx"`
-	Htg    int    `json:"htg"`     // 时天干
-	HtgStr string `json:"htg_str"` // 时天干名称
-	HtgWX  string `json:"htgwx"`
-	Hdz    int    `json:"hdz"`     // 时地支
-	HdzStr string `json:"hdz_str"` // 时地支名称
-	HdzWX  string `json:"hdzwx"`
+	Ytg    int    `json:"ytg"`    // 年天干
+	YtgStr string `json:"ytgStr"` // 年天干名称
+	YtgWX  string `json:"ytgWx"`
+	Ydz    int    `json:"ydz"`    // 年地支
+	YdzStr string `json:"ydzStr"` // 年地支名称
+	YdzWX  string `json:"yszWx"`
+	Mtg    int    `json:"mtg"`    // 月天干
+	MtgStr string `json:"mtgStr"` // 月天干名称
+	MtgWX  string `json:"mtgWx"`
+	Mdz    int    `json:"mdz"`    // 月地支
+	MdzStr string `json:"mdzStr"` // 月地支名称
+	MdzWX  string `json:"mdzWx"`
+	Dtg    int    `json:"dtg"`    // 日天干
+	DtgStr string `json:"dtgStr"` // 日天干名称
+	DtgWX  string `json:"dtgWx"`
+	Ddz    int    `json:"ddz"`    // 日地支
+	DdzStr string `json:"ddzStr"` // 日地支名称
+	DdzWX  string `json:"ddzWx"`
+	Htg    int    `json:"htg"`    // 时天干
+	HtgStr string `json:"htgStr"` // 时天干名称
+	HtgWX  string `json:"htgWx"`
+	Hdz    int    `json:"hdz"`    // 时地支
+	HdzStr string `json:"hdzStr"` // 时地支名称
+	HdzWX  string `json:"hdzWx"`
 
-	DestinyScore int    `json:"destiny_score"` // 八字得分
-	DestinyLevel string `json:"destiny_level"` // 八字强弱
-	PositiveGod  string `json:"postive_god"`   // 喜神
-	NegtiveGod   string `json:"negtive_god"`   // 忌神
+	DestinyScore int    `json:"destinyScore"` // 八字得分
+	DestinyLevel string `json:"destinyLevel"` // 八字强弱
+	PositiveGod  string `json:"positiveGod"`  // 喜神
+	NegtiveGod   string `json:"negativeGod"`  // 忌神
 }
 
 // 农历
 type LunarDate struct {
 	*Date     `json:"date"`
-	MonthStr  string          `json:"month_str"`  // 月的农历名称
-	DayStr    string          `json:"day_str"`    // 天的农历名称
-	LeapStr   string          `json:"leap_str"`   // 闰
-	MonthDays int             `json:"-"`          // 当月有多少天
-	LeapYear  int             `json:"leap_year"`  // 是否闰年，0不是闰年，大于就是闰几月
-	LeapMonth int             `json:"leap_month"` // 当前前是否是所闰的那个月，0不是，1本月就是闰月
-	YearGanZi *LunarYearGanZi `json:"gan_zi"`
+	MonthStr  string          `json:"monthStr"`  // 月的农历名称
+	DayStr    string          `json:"dayStr"`    // 天的农历名称
+	LeapStr   string          `json:"leapStr"`   // 闰
+	MonthDays int             `json:"-"`         // 当月有多少天
+	LeapYear  int             `json:"leapYear"`  // 是否闰年，0不是闰年，大于就是闰几月
+	LeapMonth int             `json:"leapMonth"` // 当前前是否是所闰的那个月，0不是，1本月就是闰月
+	YearGanZi *LunarYearGanZi `json:"ganZi"`
 }
 
 // LunarYearGanZi 农历通谷记年(干支和生肖属相)
